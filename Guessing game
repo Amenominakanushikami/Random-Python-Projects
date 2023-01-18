@@ -20,3 +20,5 @@ def guess():
             print("You must insert a number")
 
 guess()
+
+#this code does not ask for an input on the range of possibilities from the user. It also does not give any hints. If I come back to this project, I would like to solve these problems
