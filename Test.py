@@ -1,0 +1,51 @@
+import random
+
+moves = ["Rock", "Paper", "Scissors", "Lizard", "Spock"]
+
+score = {"player": 0, "computer": 0}
+
+def display_rules():
+    print("Welcome to Rock, Paper, Scissors, Lizard, Spock!")
+    print("The rules are simple:")
+    print("- Rock beats Scissors and Lizard")
+    print("- Paper beats Rock and Spock")
+    print("- Scissors beats Paper and Lizard")
+    print("- Lizard beats Paper and Spock")
+    print("- Spock beats Rock and Scissors")
+
+display_rules()
+
+def rpsls():
+    player_move = input("Your move! ").capitalize()
+    computer_move = random.choice(moves)
+    if player_move not in moves:
+        print("Invalid move!")
+    elif player_move == computer_move:
+        print("Computer played "+computer_move+"! Its a draw!")
+    elif player_move == "Rock" and computer_move in ["Paper", "Spock"]:
+        print("Computer played "+computer_move+"! You lost :(")
+        score["computer"] += 1
+    elif player_move == "Paper" and computer_move in ["Scissors" or "Lizard"]:
+        print("Computer played "+computer_move+"! You lost :(")
+        score["computer"] += 1
+    elif player_move == "Scissors" and computer_move in ["Rock" or "Spock"]:
+        print("Computer played " + computer_move + "! You lost :(")
+        score["computer"] += 1
+    elif player_move == "Lizard" and computer_move in ["Rock" or "Scissors"]:
+        print("Computer played " + computer_move + "! You lost :(")
+        score["computer"] += 1
+    elif player_move == "Spock" and computer_move in ["Paper", "Lizard"]:
+        print("Computer played " + computer_move + "! You lost :(")
+        score["computer"] += 1
+    else:
+        print("Computer played "+computer_move+"! You won ;)")
+        score["player"] += 1
+    print(score)
+    if (score["player"] + 2) < score["computer"]:
+        answer = input("Wow, you're terrible! Need a reminder of the rules? (No, I remember the rules, Im just terrible) ")
+        if answer != "No, I remember the rules, Im just terrible":
+            display_rules()
+    Replay = input("Type ""yes"" to play again: ").capitalize()
+    if Replay == "Yes":
+        rpsls()
+rpsls()
