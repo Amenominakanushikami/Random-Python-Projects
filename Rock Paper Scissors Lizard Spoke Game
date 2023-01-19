@@ -49,3 +49,5 @@ def rpsls():
     if Replay == "Yes":
         rpsls()
 rpsls()
+
+#could have used a dictionary instead of the elif block, but this works too
