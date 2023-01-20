@@ -1,5 +1,4 @@
 import random
-import string
 import nltk
 
 nltk.download('words')
@@ -8,26 +7,50 @@ word_list = words[:1000]
 
 def hangman():
     word = random.choice(word_list)
+    try:
+        word_length = int(input("Choose the length of the word! (between 4 and 12 characters): "))
+    except ValueError:
+        print("You must insert a number")
+        hangman()
+        return
+    if not 3 < word_length < 13:
+        print("You must choose between 4 or 12 characters")
+        hangman()
+    while "-" in word or " " in word or word_length != len(word):
+        word = random.choice(word_list)
     guessed_letters = []
     incorrect_guesses = 0
-    while incorrect_guesses < 6:
+    try:
+        x = int(input("How many lives before game over? (max of 10, min of 2): "))
+    except ValueError:
+        print("You must insert a number")
+        hangman()
+    if x > 10:
+        print("You cannot choose to play with more than 10 lives")
+        hangman()
+    if x < 2:
+        print("You cannot choose to play with less than 2 lives")
+        hangman()
+    while incorrect_guesses < x:
         guess = input("Guess a letter: ")
         if guess in guessed_letters:
             print("You already guessed that letter. Try again.")
         elif not guess.isalpha() or len(guess) > 1 or guess.isspace():
             print("Invalid input, please enter a single letter")
-        elif guess in word:
-            guessed_letters.append(guess)
-            print(" ".join([letter if letter in guessed_letters else "_" for letter in word]))
-            if "_" not in " ".join([letter if letter in guessed_letters else "_" for letter in word]):
-                print("You Win!")
-                break
         else:
-            incorrect_guesses += 1
-            print("Incorrect. You have", 6 - incorrect_guesses, "guesses left.")
-    if incorrect_guesses == 6:
+            if guess in word:
+                guessed_letters.append(guess)
+                print(" ".join([letter if letter in guessed_letters else "_" for letter in word]))
+                if "_" not in " ".join([letter if letter in guessed_letters else "_" for letter in word]):
+                    print("You Win!")
+                    break
+            else:
+                incorrect_guesses += 1
+                print("Incorrect. You have", x - incorrect_guesses, "guesses left.")
+    if incorrect_guesses == x:
         print("You lose")
-        print(word)
+        word = word.upper()
+        print("The word was "+word+"!")
     replay = input("Enter Yes to play again!: ").lower()
     if replay == "yes":
         hangman()
@@ -36,4 +59,6 @@ def hangman():
 
 hangman()
 
-#could be improved
+#when player inputs invalid number of lives, it asks him for word length, need to change it to a while loop instead of calling the function recursively :(
+#could add a counter with messages for certain events, for example, if the player guessed the word 3 times, the message "3 in a row!" would appear
+#all things considered, I did a pretty good job
