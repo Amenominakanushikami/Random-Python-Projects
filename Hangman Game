@@ -45,6 +45,7 @@ def hangman():
                     print("You Win!")
                     break
             else:
+                guessed_letters.append(guess)
                 incorrect_guesses += 1
                 print("Incorrect. You have", x - incorrect_guesses, "guesses left.")
     if incorrect_guesses == x:
@@ -56,6 +57,9 @@ def hangman():
         hangman()
     else:
         print("See ya next time!")
+
+hangman()
+
 
 hangman()
 
